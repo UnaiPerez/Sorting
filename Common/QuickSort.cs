@@ -9,18 +9,19 @@ namespace Common
         public int Partition(int[] A, int firstIndex, int lastIndex)
         {
             //TODO #1: Choose a pivot, move all elements lower than the pivot to the beginning of the array and return the position where the pivot has been moved to
-            int pivotPos = 0;
-            int pivot = A[firstIndex];
+            int pivotPos = firstIndex - 1;
+            int pivot = A[lastIndex];
             for(int i = pivotPos + 1;i < lastIndex;i++)
             {
                 if (A[i] < pivot)
                 {
-                    Swap(A, i, pivotPos);
                     pivotPos++;
+                    Swap(A, i, pivotPos);
+                    
                 }
             }
-            Swap(A, pivot, pivotPos);
-            return pivotPos;
+            Swap(A, pivotPos + 1, lastIndex);
+            return pivotPos + 1;
         }
 
         private void Swap(int[] A, int i, int pivotPos)
@@ -35,10 +36,15 @@ namespace Common
         {
             //TODO #2: Implement QuickSort using the method above
             //         a) Partition the array
-
             //         b) Recursively order the elements before the pivot, and after the pivot
-           
 
+              if (firstIndex < lastIndex)
+            {
+                int pivotPos = Partition(A, firstIndex, lastIndex);
+
+                Sort(A, firstIndex, pivotPos - 1);
+                Sort(A, pivotPos + 1, lastIndex);
+            }
         }
 
         public void Sort(int[] A)
